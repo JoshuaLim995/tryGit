@@ -1,0 +1,161 @@
+<?php
+
+//getting the database connection
+require_once 'DbConnect.php';
+
+
+$response = array();
+
+//check if is an api call
+if(isset($_GET['apicall'])){
+
+switch($_GET['apical']){
+
+case 'signup':
+// HERE TO HANDLE THE REGISTERATION
+
+//CHECK IF THE PARAMETERS REQUIRED ARE AVAILABLE OR NOT
+if (isTheseParametersAvailable(array('username', 'email', 'password', 'gender'))){
+
+ //GETTING THE VALUES
+ $username = $_POST['username']; 
+ $email = $_POST['email']; 
+ $password = md5($_POST['password']);
+ $gender = $_POST['gender']; 
+
+//STATEMENT TO CHECK IF THE USER IS ALREADY EXIST WITH THE USERNAME OR EMAIL
+ $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+ $stmt->bind_param("ss", $username, $email);
+ $stmt->execute();
+ $stmt->store_result();
+
+//IF THE USER ALREADY EXIST IN THE DATABASE
+ if($stmt->num_rows > 0){
+ $response['error'] = true;
+ $response['message'] = 'User already registered';
+ $stmt->close();
+ }
+else{
+
+//IF THE USER IS NEW (NOT IN DATABASE)
+ $stmt = $conn->prepare("INSERT INTO users (username, email, password, gender) VALUES (?, ?, ?, ?)");
+ $stmt->bind_param("ssss", $username, $email, $password, $gender);
+
+//IF USER IS SUCCESSFULLY ADDED TO THE DATABASE
+if($stmt->execute()){
+
+//FETCH THE USER BACK FOR ADDING IN TO THE RESPONSE
+$stmt = $conn->prepare("SELECT id, id, username, email, gender FROM users WHERE username = ?"); 
+ $stmt->bind_param("s",$username);
+ $stmt->execute();
+
+ $stmt->bind_result($userid, $id, $username, $email, $gender);
+ $stmt->fetch();
+
+//INSERT THE USER DETAIL INTO ARRAY
+ $user = array(
+ 'id'=>$id, 
+ 'username'=>$username, 
+ 'email'=>$email,
+ 'gender'=>$gender
+ );
+ 
+ $stmt->close();
+
+
+//ADDING THE USER DATA IN RESPONSE
+
+ $response['error'] = false; 
+ $response['message'] = 'User registered successfully'; 
+ $response['user'] = $user; 
+ }
+}
+else{
+//IF THE PARAMETER REQUIRED IS NOT AVAILABLE
+ $response['error'] = true; 
+ $response['message'] = 'required parameters are not available'; 
+ }
+
+break;
+
+case 'login':
+// HERE TO HANDLE THE LOGIN
+
+//PARAMETERS REQUIRED: USERNAME,, PASSWORD
+if(isTheseParametersAvailable(array('username', 'password'))){
+
+//GETTING VALUES 
+ $username = $_POST['username'];
+ $password = md5($_POST['password']); 
+
+//CREATING THE QUERY
+$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ? AND password = ?");
+ $stmt->bind_param("ss",$username, $password);
+
+ $stmt->execute();
+ 
+ $stmt->store_result();
+
+//IF USER EXIST WITH GIVEN CREDENTIAL
+ if($stmt->num_rows > 0){
+
+ $stmt->bind_result($id, $username, $email, $gender);
+ $stmt->fetch();
+
+//INSET BINDED RESULT TO USER
+ $user = array(
+ 'id'=>$id, 
+ 'username'=>$username, 
+ 'email'=>$email,
+ 'gender'=>$gender
+ );
+
+//ADDING THE USER DATA IN RESPONSE
+ $response['error'] = false; 
+ $response['message'] = 'Login successfull'; 
+ $response['user'] = $user; 
+}
+else{
+// IF USER NOT FOUND
+ $response['error'] = false; 
+ $response['message'] = 'Invalid username or password';
+ }
+}
+
+
+break;
+
+default:
+$response['error'] = true;
+$response['message'] = 'Invalid Operation Called';
+}
+
+}else{
+// if not an api call
+$response['error'] = true;
+$response['message'] = 'Invalid API Call';
+}
+
+ //displaying the response in json structure 
+ echo json_encode($response);
+
+
+
+
+
+//FUNCTION TO VALIDATE IF THE REQUIRED PARAMETERS ARE AVAILABLE OR NOT
+ function isTheseParametersAvailable($params){
+ 
+ //traversing through all the parameters 
+ foreach($params as $param){
+
+ //if the paramter is not available
+ if(!isset($_POST[$param])){ return false;  }
+
+ }
+ //return true if every param is available 
+ return true; 
+ }
+
+
+
