@@ -1,12 +1,12 @@
-Retrofit Android Tutorial – Using Retrofit 2.2 with PHP Restful API (Sign in / Sign upp for android app)
+Retrofit Android Tutorial â€“ Using Retrofit 2.2 with PHP Restful API (Sign in / Sign upp for android app)
 https://www.simplifiedcoding.net/retrofit-android-tutorial/
 
 
-PHP Restful API Framework SLIM to Create REST API – 1
+PHP Restful API Framework SLIM to Create REST API â€“ 1
 https://www.simplifiedcoding.net/php-restful-api-framework-slim-tutorial-1/
 
 
-PHP Rest API Framework SLIM to Create REST API – 2
+PHP Rest API Framework SLIM to Create REST API â€“ 2
 https://www.simplifiedcoding.net/php-rest-api-framework-tutorial-part-2/
 
 
@@ -14,7 +14,7 @@ Android Login and Registration Tutorial with PHP MySQL
 https://www.simplifiedcoding.net/android-login-and-registration-tutorial/
 
 
-Android Volley Tutorial – Fetching JSON Data from URL
+Android Volley Tutorial â€“ Fetching JSON Data from URL
 https://www.simplifiedcoding.net/android-volley-tutorial-fetch-json/
 
 
@@ -26,3 +26,6 @@ http://mrbool.com/how-to-create-an-android-user-login-system-using-mysql/31512
 
 
 https://www.learn2crack.com/2013/08/develop-android-login-registration-with-php-mysql.html/
+
+
+https://androidjson.com/android-server-login-registration-php-mysql/
