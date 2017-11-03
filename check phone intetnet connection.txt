@@ -1,0 +1,60 @@
+//Check internet connectinon in phone
+
+public static boolean hasConnection() {
+    ConnectivityManager cm = (ConnectivityManager) MbridgeApp.getContext().getSystemService(
+        Context.CONNECTIVITY_SERVICE);
+
+    NetworkInfo wifiNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+    if (wifiNetwork != null && wifiNetwork.isConnected()) {
+      return true;
+    }
+
+    NetworkInfo mobileNetwork = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+    if (mobileNetwork != null && mobileNetwork.isConnected()) {
+      return true;
+    }
+
+    NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+    if (activeNetwork != null && activeNetwork.isConnected()) {
+      return true;
+    }
+
+    return false;
+  }
+
+
+
+//OR THIS.. THIS IS ALSO CONNECTION CHECKING (SIMPLIFIED VERSION FROM ABOVE)
+private boolean connectionAvailable() {
+    boolean connected = false;
+    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+            connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+        //we are connected to a network
+        connected = true;
+    }
+    return connected;
+}
+
+
+
+
+//getActiveNetworkInfo() may return null, so you will get a force close, but you can do that:
+
+ConnectivityManager cm = (ConnectivityManager) 
+getSystemService(this.CONNECTIVITY_SERVICE);
+NetworkInfo ni = cm.getActiveNetworkInfo();
+if (null == ni)
+    return false;
+return ni.isConnectedOrConnecting();
+
+//Then the check is simple:
+
+if (networkAvailable()) // << your method from above
+{
+// Do stuff
+}
+else
+{
+   Toast.makeToast(yourcontext, "No network available", Toast.LENGTH_LONG).show();
+}
