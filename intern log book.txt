@@ -1,0 +1,12 @@
+week 1: orentation, breif about what to do, learn the safety measures. study the over view of the warehouse system or flow. supervisor asked to do research for basic requirements in a warehouse control system(WCS) and warehouse management system(WMS)
+week 2: request for pc that is capable to use microsoft visual studio, consult with supervisor about the research.. research again after being explained.  study the documentation for connecting plc.. study mx component documentation, understanding the codes for connecting the plc (programable logic controller) doing research on related topic. 
+week 3: attending meeting (ice-breaking games) understanding the codes for connecting the plc (programable logic controller) doing research on related topic. testing to connect to the plc (succeed). do research on sql server then setting up/ configure the microsoft sql server, create a database for testing out connection between microsoft visual studio and sql server. 
+week 4: create GUI prototype based on the reference from julies. created (login, product master, etc ) editing the database to suite the GUI created. study more on the documentation about the basic requirements.
+week 5: 
+week 6:
+week 7:
+week 8:
+week 9:
+week 10:
+week 11:
+week 12:
