@@ -7,5 +7,10 @@ http://viralpatel.net/blogs/android-internet-connection-status-network-change/
 
 https://www.androidhive.info/2013/12/android-populating-spinner-data-from-mysql-database/
 
+
+//Volley Guides
+https://developer.android.com/training/volley/index.html
 //Retrieve from mysql using Volley
 https://www.simplifiedcoding.net/retrieve-data-mysql-database-android/
+//Post data to mysql using volley
+https://www.android-examples.com/volley-post-request-php-mysql/
