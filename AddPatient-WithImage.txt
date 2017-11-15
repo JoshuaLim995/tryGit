@@ -1,0 +1,62 @@
+<?php 
+require_once 'DbConnect.php';
+$response = array();
+if(isset($_GET['apicall'])){
+	
+	switch($_GET['apicall']){
+		
+		case 'signup':
+		
+		if(isTheseParametersAvailable(array('name','ic','birthdate','gender','bloodType','address','contact','meals','allergic','sickness','regType','regDate','margin','image'))){
+			$name = $_POST['name'];
+			$ic = $_POST['ic'];
+			$birthdate = $_POST['birthdate'];
+			$gender = $_POST['gender'];
+			$bloodType = $_POST['bloodType'];
+			$address = $_POST['address'];
+			$contact = $_POST['contact'];
+			$meals = $_POST['meals'];
+			$allergic = $_POST['allergic'];
+			$sickness = $_POST['sickness'];
+			$regType = $_POST['regType'];
+			$regDate = $_POST['regDate'];
+			$margin = $_POST['margin'];
+$image = $_POST['image'];
+$path = "uploads/$ic.png";
+ 
+$actualpath = "IMAGE_PATH/$path";
+
+
+		$stmt = $conn->prepare("INSERT INTO patients (name, ic, birthdate, gender, bloodType, address, contact, meals, allergic, sickness, regType, regDate, margin, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			$stmt->bind_param("ssssssssssssss", $name, $ic, $birthdate, $gender, $bloodType, $address, $contact, $meals, $allergic, $sickness, $regType, $regDate, $margin, $image);
+			if($stmt->execute()){
+
+ file_put_contents($path,base64_decode($image));
+
+				$stmt->close();
+				$response['error'] = false; 
+				$response['message'] = 'User registered successfully'; 
+			}
+		}else{
+			$response['error'] = true; 
+			$response['message'] = 'required parameters are not available'; 
+		}
+		break;
+		default: 
+		$response['error'] = true; 
+		$response['message'] = 'Invalid Operation Called';
+	}
+}else{
+	$response['error'] = true; 
+	$response['message'] = 'Invalid API Call';
+}
+echo json_encode($response);
+function isTheseParametersAvailable($params){
+	foreach($params as $param){
+		if(!isset($_POST[$param])){
+			return false; 
+		}
+	}
+	return true; 
+}
+?>
