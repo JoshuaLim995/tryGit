@@ -1,0 +1,22 @@
+Image
+
+
+Android take photo from camera and gallery - code sample
+http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
+
+
+
+Android Upload Image Using PHP MySQL and Display Images in ListView
+https://www.simplifiedcoding.net/android-upload-image-using-php-mysql-android-studio/
+
+
+How to Take a photo from camera and upload online and save image path into MySQL database with image name project with Runtime Camera permission.
+https://androidjson.com/capture-image-camera-upload-server/
+
+
+Circular images using Glide Image Library in Android
+http://www.gadgetsaint.com/android/circular-images-glide-library-android/
+
+
+
+github: CircleImageView
