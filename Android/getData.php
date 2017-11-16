@@ -20,7 +20,9 @@ if(isset($_GET['apicall'])){
 		break;
 
 		case 'clients':
-		$sql = "SELECT ID, Name, IC, Contact, BirthYear, Address, Gender, RegisDate, RegisType, Patient_ID FROM clients";
+			//JOIN Client and Patient tables
+		$sql = "SELECT c.ID, c.Name, c.IC, c.Contact, c.BirthYear, c.Address, c.Gender, c.RegisDate, c.RegisType, c.Patient_ID, p.Name FROM clients c, patients p WHERE c.Patient_ID = p.ID";	
+	//	$sql = "SELECT ID, Name, IC, Contact, BirthYear, Address, Gender, RegisDate, RegisType, Patient_ID FROM clients";
 		break;
 
 		default:
