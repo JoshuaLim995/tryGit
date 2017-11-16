@@ -1,0 +1,13 @@
+glide v4
+Glide.with(context).load(url).apply(RequestOptions.circleCropTransform()).into(imageView);
+
+glide v3
+ Glide.with(context).load(url).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
+        @Override
+        protected void setResource(Bitmap resource) {
+            RoundedBitmapDrawable circularBitmapDrawable =
+                    RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+            circularBitmapDrawable.setCircular(true);
+            imageView.setImageDrawable(circularBitmapDrawable);
+        }
+    });
