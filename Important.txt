@@ -1,0 +1,11 @@
+refer "Android Volley Insert Multiple Data in MySQL Database Tutorial" for adding users, clients
+
+refer "Android Upload Image to Server using Volley Tutorial" for adding patients
+
+refer "CRUD database online  PHP Volley" for update delete 
+
+refer "Retrieve Data From MySQL Database in Android using Volley" for retreive data (users, clients, patients)
+
+
+
+https://gist.github.com/anggadarkprince/a7c536da091f4b26bb4abf2f92926594
