@@ -1,0 +1,196 @@
+package com.joshua_lsj.goldenage.Experiment;
+
+
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionMenu;
+//import com.joshua_lsj.goldenage.ListViewFragment.ListViewClientFragment;
+//import com.joshua_lsj.goldenage.ListViewFragment.ListViewDriverFragment;
+//import com.joshua_lsj.goldenage.ListViewFragment.ListViewNurseFragment;
+//import com.joshua_lsj.goldenage.ListViewFragment.ListViewPatientFragment;
+//import com.joshua_lsj.goldenage.ListViewFragment.ListViewPatientFragment;
+import com.joshua_lsj.goldenage.R;
+//import android.support.design.widget.FloatingActionButton;
+
+public class NurseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+//THIS IS FOR NURSE 
+    private ListView listView;
+    private FloatingActionMenu fam;
+    private Toolbar toolbar;
+    private  DrawerLayout drawer;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle toggle;
+
+    private FloatingActionButton fab;
+
+    public static Activity getActivity(){
+        return getActivity();
+    }
+
+
+
+    private void Initialize(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+/*
+        fab = (FloatingActionButton) findViewById(R.id.fab); //create another floating action button for assigning driver
+fab.setOnClickListener(new View.OnClickListener() { 
+    public void onClick(View v) { 
+        intent = new Intent(getApplicationContext(),  AssignDriverActivity.class); //Intent to Assign Driver 
+                startActivity(intent);
+    } 
+});
+*/
+
+
+
+//        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.setDrawerListener(toggle);
+//        toggle.syncState();
+
+//        navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
+
+//        navigationView.setCheckedItem(R.id.nav_users_listView);
+
+
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_main);
+
+        //CHECK IF USER IS LOGGED IN OR NOT, IF NOT, LOGINACTIVITY WILL OPEN INSTEAD
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+
+        Initialize();
+
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, new ListViewPatientsFragment())
+                .commit();
+        getSupportActionBar().setTitle("Patients");
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+ //       if(networkInfo != null && networkInfo.isConnected()) {
+ //s           new DownloadJsonUsers(this).execute();
+//        }
+  //      else {
+  //          Toast toast = Toast.makeText(this, "Unable to connect", Toast.LENGTH_LONG);
+  //          toast.show();
+  //      }
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+/*
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+*/
+/*
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        FragmentManager fragmentManager = getFragmentManager();
+        if (id == R.id.nav_users_listView) {
+            Toast.makeText(getApplicationContext(), "List All Users", Toast.LENGTH_SHORT).show();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new ListViewUserFragment())
+                    .commit();
+            getSupportActionBar().setTitle("Users");
+        }
+/*
+        else if (id == R.id.nav_nurse_listView) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new ListViewNurseFragment())
+                    .commit();
+            getSupportActionBar().setTitle("Nurses");
+        }
+        else if (id == R.id.nav_driver_listView) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new ListViewDriverFragment())
+                    .commit();
+            getSupportActionBar().setTitle("Drivers");
+        }
+        else if (id == R.id.nav_client_listView) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, new ListViewClientFragment())
+                    .commit();
+            getSupportActionBar().setTitle("Clients");
+      } */
+        else if (id == R.id.nav_logout) {
+            finish();
+            Toast.makeText(getApplicationContext(), "Logged out", Toast.LENGTH_SHORT).show();
+            SharedPrefManager.getInstance(getApplicationContext()).logout();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+*/
+
+}

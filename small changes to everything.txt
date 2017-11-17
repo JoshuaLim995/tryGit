@@ -1,0 +1,18 @@
+In DownloadJsonPatients
+
+after Margin... change name in String name = reader.nextName();  to item
+else if(name.equals("Image")){
+	patient.setImage(reader.nextString());
+}
+
+
+
+
+
+
+
+In ViewPatientActivity 
+
+in public void Initialize()...
+ImageView imageView = (ImageView) findViewById(R.id.item_view_image);
+Glide.with(this).load(patient.getImage()).apply(RequestOptions.circleCropTransform()).into(imageView);

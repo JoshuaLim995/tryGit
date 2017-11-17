@@ -1,0 +1,133 @@
+class MainActivity
+
+
+
+//In OnCreate
+//Adding Click Listener for imageView
+imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                selectImage()
+
+            }
+});
+
+
+
+private void selectImage(){
+	final CharSequence[] items = {"Camera", "Gallery", "Cancel" };
+
+	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	builder.setTitle("Add Image");
+	builder.setItems(items, new DialogInterface.OnClickListener(){
+		@Override
+		public void onClick(DialogInterface dialog, int item){
+			boolean result = Utility.checkPermission(this);
+		
+			if(items[item].equals("Camera")){
+				cameraIntent();
+			}
+			else if(items[item].equals("Gallery")){
+				galleryIntent();
+			}
+			else if(items[item].equals("Cancel")){
+				dialog.dismiss();
+			}
+			else{
+				dialog.dismiss();
+			}
+		}
+	});
+	builder.show();
+}
+
+
+private void cameraIntent(){
+	intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+	startActivityForResult(intent, 7);
+}
+
+private void galleryIntent(){
+	Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	startActivityForResult(i, 100);
+}
+
+
+
+private void EnableRuntimePermissionToAccessCamera(){
+
+	if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.CAMERA)){
+	
+		// Printing toast message after enabling runtime permission.
+		Toast.makeText(MainActivity.this,"CAMERA permission allows us to Access CAMERA app", Toast.LENGTH_LONG).show();
+
+	} else {
+
+		ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CAMERA}, RequestPermissionCode);
+
+	}
+}
+
+
+
+private void EnableRuntimePermissionToAccessGallery(){
+	
+	if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+	
+		// Printing toast message after enabling runtime permission.
+		Toast.makeText(MainActivity.this,"READ_EXTERNAL_STORAGE permission allows us to Access Gallery app", Toast.LENGTH_LONG).show();
+
+	} else {
+
+		ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, RequestPermissionCode);
+
+	}
+}
+
+
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
+
+	if (requestCode == 100 || requestCode == 7 && resultCode == RESULT_OK && data != null) {
+
+	//getting the image Uri
+	Uri imageUri = data.getData();
+	try {
+		//getting bitmap object from uri
+		bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+		
+		//displaying selected image to imageview
+                imageView.setImageBitmap(bitmap);
+
+
+		//Displaying selected image with glide v3
+		Glide.with(this)
+		.load(new File(imageUri.getPath())) // Uri of the picture
+		.transform(new CircleTransform(..))
+		.into(imageView);
+
+		//Displaying selected image with glide v4
+		Glide.with(this)
+		.load(new File(imageUri.getPath()))
+		.apply(RequestOptions.circleCropTransform())
+		.into(imageView);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+
+
+
+
+//layout xml
+ImageView
+	android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"

@@ -1,0 +1,61 @@
+<?php 
+require_once 'DbConnect.php';
+$response = array();
+$query = NULL;
+
+if(isset($_GET['Delete'])){
+
+	$id = $_POST['id'];
+	
+	switch($_GET['Delete']){
+
+		case 'Client':
+			$query = "DELETE FROM clients WHERE id = $id";
+			$response['message'] = 'Client Deleted';
+		break;
+		
+		case 'User':
+			$query = "DELETE FROM users WHERE id = $id";
+			$response['message'] = 'User Deleted';
+		break;
+
+		case 'Patient':
+			$query = "DELETE FROM patients WHERE id = $id";
+			$response['message'] = 'Patient Deleted';
+		break;
+
+		default: 
+		$query = NULL;
+		$response['error'] = true; 
+		$response['message'] = 'Invalid Operation Called';
+	}
+
+
+	if(isset($query)){
+		$stmt = $conn->prepare($query);
+		if($stmt->execute()){
+			$stmt->close();
+			$response['error'] = false; 			
+		}
+		else{
+			$stmt->close();
+			$response['error'] = true; 
+			$response['message'] = 'Error Execute Query';
+		}
+	}
+	else{
+		$response['error'] = true; 
+		$response['message'] = 'Query is NULL';
+	}
+
+
+
+}
+}else{
+	$response['error'] = true; 
+	$response['message'] = 'Invalid API Call';
+}
+
+echo json_encode($response);
+
+?>

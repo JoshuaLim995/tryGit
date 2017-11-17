@@ -1,0 +1,35 @@
+API
+
+IF Register
+	SWITCH(Register)
+	CASE 'Patient'
+	CASE 'User'
+	CASE 'Client'
+
+
+
+ELSE IF GetData
+	SWITCH(GetData)
+	CASE 'Patient'
+	CASE 'User'
+	CASE 'Client'
+
+
+
+ELSE IF Update
+	SWITCH(Update)
+	CASE 'Patient'
+	CASE 'User'
+	CASE 'Client'
+
+
+
+ELSE IF Delete
+	SWITCH(Delete)
+	CASE 'Patient'
+	CASE 'User'
+	CASE 'Client'
+
+
+ELSE
+	'Invalid API call'
