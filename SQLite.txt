@@ -1,6 +1,9 @@
 SQLite -> server
 https://www.simplifiedcoding.net/android-sync-sqlite-database-with-server/
 
+server -> SQLite
+https://androidjson.com/save-store-php-mysql-json-parsing-data-sqlite/
+
 reference
 https://stackoverflow.com/questions/24974033/android-how-to-synchronize-the-sqlite-data-with-server
 https://stackoverflow.com/questions/23055438/android-volley-synchronize-server-sqlite
